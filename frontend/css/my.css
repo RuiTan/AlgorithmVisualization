@@ -1,0 +1,7 @@
+.sort-block{
+    position: absolute;
+    width: 30px;
+    height: 200px;
+    background-color: rgb(255,143,66);
+    bottom: 0
+}
