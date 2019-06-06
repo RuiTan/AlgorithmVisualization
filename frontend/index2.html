@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/my.css">
+</head>
+<body>
+
+<div class="restart-demo">
+    <div class="squre el"></div>
+    <div class="squre el"></div>
+    <div class="squre el"></div>
+    <div class="restart">Restart</div>
+</div>
+
+<script src="js/anime.min.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/popper.js"></script>
+<script src="js/bootstrap.js"></script>
+<script>
+    var animation = anime({
+        targets: '.restart-demo .el',
+        translateX: 250,
+        delay: function(el, i) { return i * 100; },
+        height: function (el, i) {
+            return i;
+        },
+        direction: 'alternate',
+        loop: true,
+        easing: 'easeInOutSine'
+    });
+    document.querySelector('.restart-demo .restart').onclick = animation.restart;
+</script>
+</body>
+
+</html>

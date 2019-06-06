@@ -75,20 +75,15 @@
 </div>
 
 <div class="container">
-    <div class="jumbotron">
+    <div class="jumbotron" >
         <h1 class="display-6" style="text-align: center">排序算法可视化</h1>
-        <div id="sort-blocks" style="height: 500px">
-            <div class="sort-block" id="sort-block-0"></div>
-            <!--<div class="sort-block" id="sort-block-1"></div>-->
-            <!--<div class="sort-block" id="sort-block-2"></div>-->
-            <!--<div class="sort-block" id="sort-block-3"></div>-->
-            <!--<div class="sort-block" id="sort-block-4"></div>-->
-            <!--<div class="sort-block" id="sort-block-5"></div>-->
-            <!--<div class="sort-block" id="sort-block-6"></div>-->
-            <!--<div class="sort-block" id="sort-block-7"></div>-->
+        <div id="sort-blocks" class="blocks" style="height: 500px">
         </div>
     </div>
-
+    <div class="row">
+        <button class="btn btn-primary" id="play" onclick="playOrPause(true)">play</button>
+        <button class="btn btn-primary" id="pause" onclick="playOrPause(false)">pause</button>
+    </div>
 </div>
 
 <script src="js/anime.min.js"></script>
@@ -96,63 +91,53 @@
 <script src="js/popper.js"></script>
 <script src="js/bootstrap.js"></script>
 <script>
-    var heights = [[3,49,35,25,24,48,41,7,8],[10,44,28,49,38,34,21,9]];
-    
-    function tranversing(data) {
-        var sbs = document.getElementById("sort-blocks").children;
-        i = 0;
-        len = sbs.length;
-        while (i < len){
-            sb = sbs[i];
-            sb.style.marginLeft = i*30 + "px";
-            changeHeight(data, sb, i++);
+    var sortblocks = document.getElementById("sort-blocks");
+    $.ajax({
+        url: './source/bubble.json',
+        type: 'get',
+        success: function(data){
+            for (var i in data){
+                var sortblock = document.createElement("div");
+                sortblock.setAttribute("class", "sortblock el");
+                // sortblock.setAttribute("id", "sort-block-" + i);
+                sortblock.style.height = data[i][0];
+                sortblock.style.marginLeft = i * 20.92 + "px";
+                sortblocks.appendChild(sortblock);
+            }
+            addAnime(data);
         }
-    }
-    
-    function changeHeight(data, sb, i) {
-        var id = "#" + sb.getAttribute("id");
-        anime({
-            targets: id,
-            height: [heights[data][i], 50, 100],
-            easing: 'easeInOutQuad',
-            duration: 1000
-        });
-    }
-    
-    function tranversingRemove() {
-        var sbs = document.getElementById("sort-blocks").children;
-        i = 0;
-        len = sbs.length;
-        while (i < len){
-            sb = sbs[i++];
-            removeAnime(sb);
-        }
-    }
-
-    function removeAnime(sb) {
-        var id = "#" + sb.getAttribute("id");
-        anime.remove(id);
-    }
-
-    // tranversing(0);
-    // tranversingRemove();
-    // removeAnime(document.getElementById("sort-block-1"));
-    // removeAnime(document.getElementById("sort-block-2"));
-    // tranversing(1);
-
-    // for (var i = 0; i < 2; i++){
-    //     setTimeout(changeHeight(i), 2000);
-    // }
-
-    anime({
-        targets: "#sort-block-0",
-        height: [3,49,35,25,24,48,41,7,8,42,47,18,31,30,39,40,19,16,14,50,27,20,10,44,28,38,34,21,9,2,0],
-        easing: 'easeInOutQuad',
-        duration: 15000
     });
 
+    function expandHeight(heights) {
+        for (var i in heights){
+            heights[i] = heights[i]*10;
+        }
+        return heights;
+    }
 
+    var animations = []
 
+    function addAnime(data) {
+        var animation = anime({
+            targets: ".blocks .el",
+            height: function (el, i) {
+                // var heights = expandHeight(data[i]);
+                // console.log(heights);
+                // return heights;
+                // return i*10;
+                // return [100,200,300,400];
+                return data[i];
+            },
+            // height: [100,200,300],
+            easing: 'easeInOutQuad',
+            duration: 500
+        });
+        console.log(animation);
+    }
+
+    function playOrPause(flag) {
+
+    }
 </script>
 </body>
 </html>

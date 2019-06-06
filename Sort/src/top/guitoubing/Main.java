@@ -13,7 +13,6 @@ public class Main {
     private static void BubbleSort() {
         int temp;
         int size = numbers.length;
-        System.out.println("[");
         int flag = 0;
         for(int i = 0 ; i < size-1; i ++)
         {
@@ -25,10 +24,10 @@ public class Main {
                     numbers[j] = numbers[j+1];
                     numbers[j+1] = temp;
                 }
-                printNumbers();
+                addNumbers(flag++);
             }
         }
-        System.out.println("]");
+        printNumbers();
     }
 
     private static void addNumbers(int flag){
@@ -38,12 +37,15 @@ public class Main {
     }
 
     private static void printNumbers(){
-        System.out.print("[");
-        for (int i = 0; i < numbers.length; i++){
-            System.out.print(numbers[i]);
-            if (i != numbers.length-1)
-                System.out.print(",");
+        System.out.println("[");
+        for (int[] aResult : result) {
+            System.out.print("[");
+            for (int j = 0; j < aResult.length; j++) {
+                if (j != aResult.length - 1)
+                    System.out.print(aResult[j] + ",");
+            }
+            System.out.println("],");
         }
-        System.out.println("],");
+        System.out.println("]");
     }
 }
